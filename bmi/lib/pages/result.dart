@@ -1,8 +1,18 @@
 import 'package:bmi/pages/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:bmi/pages/constant.dart';
 
 class Result extends StatefulWidget {
-  const Result({super.key});
+  final String bmiResult;
+  final String resultText;
+  final String interpretation;
+
+  const Result({
+    super.key,
+    required this.bmiResult,
+    required this.resultText,
+    required this.interpretation,
+  });
 
   @override
   State<Result> createState() => _ResultState();
@@ -13,28 +23,28 @@ class _ResultState extends State<Result> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle:
-            true, // Pro-tip: Use this instead of wrapping Text in a Center widget
-        title: const Text('BMI Result', style: TextStyle(color: Colors.white)),
+        title: Center(
+          child: Text('BMI Result', style: TextStyle(color: Colors.white)),
+        ),
         backgroundColor: activeCardColor,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
+
         children: <Widget>[
-          // 1. TOP SECTION: The Result Card
           Expanded(
             flex: 5,
             child: ReusableCard(
               colour: activeCardColor,
-              // cardChild goes INSIDE ReusableCard!
+
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
-                    'Normal',
+                    widget.resultText.toUpperCase(),
                     style: TextStyle(
                       color: Color(0xFF24D876),
                       fontSize: 22,
@@ -42,42 +52,54 @@ class _ResultState extends State<Result> {
                     ),
                   ),
                   Text(
-                    '18.3',
+                    widget.bmiResult,
                     style: TextStyle(
                       fontSize: 100,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                   Text(
-                    'Your BMI result is quite low. You should eat more.',
+                    widget.interpretation,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 22, color: Colors.white),
                   ),
                 ],
               ),
             ),
           ),
-
-          // 2. BOTTOM SECTION: The Re-Calculate Button
           Expanded(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context); // Navigate back to the previous page
-              },
-              child: Container(
-                margin: const EdgeInsets.only(
-                  top: 10.0,
-                ), // Give it some breathing room from the card
-                color: const Color(0xFFEB1555),
-                child: const Center(
-                  child: Text(
-                    'Re-Calculate',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+            child: Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(
+                          context,
+                        ); // Navigate back to the previous page
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 30,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEB1555),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Text(
+                          'Re-Calculate',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:bmi/pages/calculator_brain.dart';
 import 'package:bmi/pages/constant.dart';
 import 'package:bmi/pages/result.dart';
 import 'package:flutter/material.dart';
@@ -323,15 +324,26 @@ class _HomepageState extends State<Homepage> {
             margin: const EdgeInsets.only(top: 10),
             child: GestureDetector(
               onTap: () {
+                CalculatorBrain calc = CalculatorBrain(
+                  height: height,
+                  weight: weight,
+                );
+
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Result()),
+                  MaterialPageRoute(
+                    builder: (context) => Result(
+                      bmiResult: calc.calculateBMI(),
+                      resultText: calc.getResult(),
+                      interpretation: calc.getInterpretation(),
+                    ),
+                  ),
                 );
                 print('Calculate button tapped!');
               },
 
               child: Container(
-                child: const Center(
+                child:  Center(
                   child: Text(
                     'CALCULATE',
                     style: TextStyle(

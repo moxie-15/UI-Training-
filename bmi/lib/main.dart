@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
       ),
       // Set the initial page
-      home: const Homepage(),
+      home:  Homepage(),
     );
   }
 }
